@@ -1,16 +1,19 @@
 #include "stdafx.h"
 #include "mainwindow.h"
 #include "about.h"
+#include "resource.h"
 #include <QtMultimedia>
 
-bool loopToggle = false;
-bool autoPlayToggle = false;
+bool loopToggle = true;
+bool autoPlayToggle = true;
 
 mainwindow::mainwindow(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	mPlayer = new QMediaPlayer(this);
+	mPlayer = new QMediaPlayer(this);	
+	pause = QIcon("Resources/Pause.png");
+	play = QIcon("Resources/Play.png");
 	volumeBar = new QWidget(this);
 	slider = new QSlider(Qt::Horizontal, volumeBar);
 	slider->setRange(0, 100);
@@ -109,6 +112,8 @@ void mainwindow::dropEvent(QDropEvent *event)
 	if (autoPlayToggle)
 	{
 		mPlayer->play();
+		ui.playButton->setText("Pause");
+		ui.playButton->setIcon(pause);
 	}
 }
 
@@ -120,13 +125,13 @@ void mainwindow::on_playButton_clicked()
 		{
 			mPlayer->play();
 			ui.playButton->setText(QString("Pause"));
-			ui.playButton->setIcon(QIcon("Resources/Pause.png"));
+			ui.playButton->setIcon(pause);
 		}
 		else
 		{
 			mPlayer->pause();
 			ui.playButton->setText(QString("Play"));
-			ui.playButton->setIcon(QIcon("Resources/Play.png"));
+			ui.playButton->setIcon(play);
 		}
 	}
 }
@@ -135,7 +140,7 @@ void mainwindow::on_stopButton_clicked()
 {
 	mPlayer->stop();
 	ui.playButton->setText(QString("Play"));
-	ui.playButton->setIcon(QIcon("Resources/Play.png"));
+	ui.playButton->setIcon(play);
 }
 
 void mainwindow::on_volumeButton_clicked()
@@ -155,12 +160,14 @@ void mainwindow::on_musicList_itemClicked(QListWidgetItem *item)
 {
 	mPlayer->stop();
 	ui.playButton->setText("Play");
-	ui.playButton->setIcon(QIcon("Resources/Play.png"));
+	ui.playButton->setIcon(play);
 	ui.playingTitle->setText(item->text());
 	mPlayer->setMedia(QUrl(QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/" + item->text()));
 	if (autoPlayToggle)
 	{
-		mPlayer->play();
+		mPlayer->play(); 
+		ui.playButton->setText("Pause");
+		ui.playButton->setIcon(pause);
 	}
 }
 
@@ -186,7 +193,7 @@ void mainwindow::on_musicPos_sliderReleased()
 	{
 		mPlayer->play();
 		ui.playButton->setText(QString("Pause"));
-		ui.playButton->setIcon(QIcon("Resources/Pause.png"));
+		ui.playButton->setIcon(pause);
 	}
 }
 
@@ -222,7 +229,7 @@ void mainwindow::updatePosition()
 	{
 		mPlayer->stop();
 		ui.playButton->setText(QString("Play"));
-		ui.playButton->setIcon(QIcon("Resources/Play.png"));
+		ui.playButton->setIcon(play);
 		if (loopToggle)
 		{
 			auto it = std::find(std::begin(list), std::end(list), ui.playingTitle->text());
@@ -249,7 +256,7 @@ void mainwindow::updatePosition()
 					}
 				}
 				ui.playButton->setText(QString("Pause"));
-				ui.playButton->setIcon(QIcon("Resources/Pause.png"));
+				ui.playButton->setIcon(pause);
 			}
 		}
 	}

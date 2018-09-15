@@ -32,6 +32,8 @@ private slots:
 	void on_musicPos_sliderReleased();
 
 private:
+	QIcon pause;
+	QIcon play;
 	QWidget *volumeBar;
 	QSlider *slider = nullptr;
 	Ui::mainwindowClass ui;

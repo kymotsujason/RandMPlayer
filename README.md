@@ -6,6 +6,8 @@ Will be more portable or installable in the future.
 
 Uses the QT GUI community opensource framework
 
+![alt-text](https://i.imgur.com/EKp7Qmn.png)
+
 Features:
 - Scans the users music folder for any songs
 - Fast application start/exit

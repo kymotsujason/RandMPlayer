@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/mainwindow">
+        <file>Resources/Pause.png</file>
+        <file>Resources/Play.png</file>
+        <file>Resources/Stop.png</file>
+        <file>Resources/Volume.png</file>
+        <file>RandMPlayer.ico</file>
+    </qresource>
+</RCC>
